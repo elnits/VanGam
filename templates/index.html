@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Van Wythoff's Game</title>
+</head>
+<body>
+    <h1>Van Wythoff's Game</h1>
+
+    <div>
+        <p>Left pile: {{ game_data.left }}</p>
+        <p>Right pile: {{ game_data.right }}</p>
+        <p>{{ game_data.message }}</p>
+    </div>
+
+    {% if not game_data.winner %}
+        {% if game_data.turn == 'player' %}
+            <form action="/move" method="POST">
+                <label for="move">Your move (e.g., 2L, 3R, 4B):</label>
+                <input type="text" id="move" name="move">
+                <button type="submit">Submit Move</button>
+            </form>
+        {% endif %}
+    {% endif %}
+
+    <hr>
+
+    <h2>Start a new game</h2>
+    <form action="/start" method="POST">
+        <label for="left">Left pile size:</label>
+        <input type="number" id="left" name="left" min="0" max="100" required>
+        <br>
+        <label for="right">Right pile size:</label>
+        <input type="number" id="right" name="right" min="0" max="100" required>
+        <br>
+        <label for="first_turn">Do you want to go first?</label>
+        <select id="first_turn" name="first_turn">
+            <option value="player">Yes</option>
+            <option value="computer">No</option>
+        </select>
+        <br>
+        <button type="submit">Start Game</button>
+    </form>
+</body>
+</html>
